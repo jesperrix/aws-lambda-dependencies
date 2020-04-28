@@ -1,0 +1,26 @@
+ARG base_image
+ARG py_dev
+
+FROM ${base_image}
+
+ENV AWS_DEFAULT_REGION eu-west-1
+ENV CFLAGS "-Os -g0 -Wl,--strip-all -I/usr/include:/usr/local/include -L/usr/lib:/usr/local/lib"
+
+RUN yum install \
+    cmake3 \
+    ninja-build \
+    boost-devel \
+    jemalloc-devel \
+    bison \
+    flex \
+    autoconf \
+    atlas \
+    atlas-devel \
+    lapack-devel \
+    blas-devel \
+    ${py_dev} \
+    -y
+
+RUN pip3 install --upgrade pip six cython cmake hypothesis
+
+ENTRYPOINT ["/bin/sh"]
