@@ -4,7 +4,8 @@ ARG py_dev
 FROM ${base_image}
 
 ENV AWS_DEFAULT_REGION eu-west-1
-ENV CFLAGS "-Os -g0 -Wl,--strip-all -I/usr/include:/usr/local/include -L/usr/lib:/usr/local/lib"
+# Flag combination is inspired by: https://towardsdatascience.com/how-to-shrink-numpy-scipy-pandas-and-matplotlib-for-your-data-product-4ec8d7e86ee4
+ENV CFLAGS "-Os -g0 -Wl,--strip-all -I/usr/include:/usr/local/include -L/usr/lib:/usr/local/lib:/usr/lib64"
 
 RUN yum install \
     cmake3 \
@@ -14,12 +15,16 @@ RUN yum install \
     bison \
     flex \
     autoconf \
-    atlas \
-    atlas-devel \
     lapack-devel \
     blas-devel \
     ${py_dev} \
     -y
+
+# Not needed since they are not a part of AWS Lambda
+# atlas \
+# atlas-devel \
+# lapack-devel \
+# blas-devel \
 
 RUN pip3 install --upgrade pip six cython cmake hypothesis
 

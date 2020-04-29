@@ -31,16 +31,7 @@ TARGET_NAME="${2}"
 [ ! -f "$REQUIREMENTS_FILE" ] && echo "No such file: $REQUIREMENTS_FILE" && exit 1
 [ "$TARGET_NAME" = "" ] && echo "No target name: $REQUIREMENTS_FILE" && exit 1
 
-# For debugging purposes
-#echo $SCRIPT_DIR
-#echo $CUR_DIR
-#echo $REQUIREMENTS_FILE
-#echo $REQUIREMENTS_FILE_NAME
-#echo $REQUIREMENTS_FILE_DIR
-#echo $REQUIREMENTS_FILE_ABS
-#exit 0
-
-# TODO for different python versions use other docker image
+# TODO when adding other python runtimes use different docker images
 docker run \
     -v${CUR_DIR}:/workdir \
     -v${REQUIREMENTS_FILE_ABS}:/workdir/requirements.txt \
@@ -50,3 +41,15 @@ docker run \
     --rm \
     aws-lambda-dependencies-py3.8 \
     build-lambda-zip.sh $TARGET_NAME
+
+# For debugging
+#docker run \
+    #-v${CUR_DIR}:/workdir \
+    #-v${REQUIREMENTS_FILE_ABS}:/workdir/requirements.txt \
+    #-v${SCRIPT_DIR}/lambda-docker/build-lambda-zip.sh:/workdir/build-lambda-zip.sh \
+    #--workdir /workdir \
+    #-it \
+    #--rm \
+    #--entrypoint "" \
+    #aws-lambda-dependencies-py3.8 \
+    #bash

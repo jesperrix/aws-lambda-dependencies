@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# Builds docker image(s) for creating AWS lambda layers
+#
+# Lambda Layers runtimes supported so far:
+#  - Python 3.8
+#
+# Copyright (C) 2020, Jesper Rix <rixjesper@gmail.com>
 set -ex
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
